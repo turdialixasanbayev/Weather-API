@@ -5,8 +5,6 @@ from config.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
-from ..serializers.get_country import GetCountrySerializer
-
 
 class GetCountryAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -20,7 +18,4 @@ class GetCountryAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        data = {"name": country.name}
-
-        serializer = GetCountrySerializer(data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(country, status=status.HTTP_200_OK)

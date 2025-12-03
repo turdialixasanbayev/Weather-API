@@ -18,4 +18,4 @@ class GetVillageAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        return Response({"village": village.name}, status=status.HTTP_200_OK)
+        return Response(village, status=status.HTTP_200_OK)

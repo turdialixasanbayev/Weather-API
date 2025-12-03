@@ -5,13 +5,9 @@ from rest_framework import status
 
 from config.permissions import IsAuthenticated
 
-from ..serializers.me import UserProfileSerializer
-
 
 class MeAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        data = {"email": request.user.get_profile['email']}
-        serializer = UserProfileSerializer(data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(request.user.get_profile, status=status.HTTP_200_OK)

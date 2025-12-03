@@ -3,12 +3,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from .managers import CustomUserManager
-from apps.weather.models import Village, Weather
+from apps.weather.models import Village
 
 
 class CustomUser(AbstractUser):
-    # user_permissions = None
-    # groups = None
+    """
+    CustomUser modeli foydalanuvchi ma'lumotlarini saqlash uchun ishlatiladi.
+    Email manzili asosida autentifikatsiya qilishni qo'llab-quvvatlaydi.
+    """
+
     username = None
     first_name = None
     last_name = None
@@ -40,25 +43,35 @@ class CustomUser(AbstractUser):
 
     @property
     def get_village(self):
-        return self.village if self.village else None
+        if not self.village:
+            return None
+
+        data = {'village': self.village.name}
+        return data
 
     @property
     def get_district(self):
-        if self.village:
-            return self.village.district
-        return None
+        if not self.village:
+            return None
+
+        data = {'district': self.village.district.name}
+        return data
 
     @property
     def get_region(self):
-        if self.village:
-            return self.village.district.region
-        return None
+        if not self.village:
+            return None
+        
+        data = {'region': self.village.district.region.name}
+        return data
 
     @property
     def get_country(self):
-        if self.village:
-            return self.village.district.region.country
-        return None
+        if not self.village:
+            return None
+
+        data = {'country': self.village.district.region.country.name}
+        return data
 
     @property
     def get_full_location(self):
@@ -66,10 +79,10 @@ class CustomUser(AbstractUser):
             return None
 
         data = {
-            "country": self.get_country.name,
-            "region": self.get_region.name,
-            "district": self.get_district.name,
-            "village": self.get_village.name,
+            "country": self.get_country['country'],
+            "region": self.get_region['region'],
+            "district": self.get_district['district'],
+            "village": self.get_village['village'],
         }
 
         return data
@@ -78,16 +91,36 @@ class CustomUser(AbstractUser):
     def get_weather(self):
         if not self.village:
             return None
-        if not Weather.objects.filter(village=self.village).exists():
+
+        weather = self.village.weathers.order_by('-updated_at').first()
+
+        if not weather:
             return None
-        return self.village.weathers.order_by('-updated_at').first()
+        
+        data = {
+            "village": self.village.name,
+            "temperature": weather.temperature,
+            "feels_like": weather.feels_like,
+            "wind_speed": weather.wind_speed,
+            "wind_deg": weather.wind_deg,
+            "visibility": weather.visibility,
+            "condition": weather.condition,
+            "description": weather.description,
+            "sunrise": weather.sunrise,
+            "sunset": weather.sunset,
+            "humidity": weather.humidity,
+            "pressure": weather.pressure,
+            "updated_at": weather.updated_at,
+        }
+
+        return data
 
     @property
     def get_profile(self):
         data = {"email": self.email}
 
         return data
-    
+
     @property
     def get_id(self) -> int:
         return self.id or None
