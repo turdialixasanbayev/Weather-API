@@ -7,6 +7,10 @@ from .api.Country.CountryDelete.views import CountryDeleteAPIView
 from .api.Country.CountryUpdate.views import CountryUpdateAPIView
 
 from .api.Region.RegionList.views import RegionListAPIView
+from .api.Region.RegionDelete.views import as_view
+from .api.Region.RegionRetrieve.views import RegionDetailAPIView
+from .api.Region.RegionUpdate.views import RegionUpdateAPIView
+from apps.weather.api.Region.RegionCreate.views import RegionCreateAPIView
 
 
 urlpatterns = [
@@ -39,5 +43,25 @@ urlpatterns = [
         'region-list/',
         RegionListAPIView.as_view(),
         name='region-list',
+    ),
+    path(
+        'region-delete/<int:pk>/',
+        as_view,
+        name='region-delete',
+    ),
+    path(
+        'region-detail/<int:pk>/',
+        RegionDetailAPIView.as_view(),
+        name='region-detail',
+    ),
+    path(
+        'region-update/<int:pk>/',
+        RegionUpdateAPIView.as_view(),
+        name='region-update',
+    ),
+    path(
+        'region-create/',
+        RegionCreateAPIView.as_view(),
+        name='region-create',
     ),
 ]

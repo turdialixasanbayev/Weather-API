@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 
     'drf_yasg',
     'rest_framework',
-    "corsheaders", # cors
+    # "corsheaders", # cors
 
     'apps.weather',
     'apps.user',
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
 
 # Cors
 
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_CREDENTIALS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -51,7 +51,7 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware", # cors
+    # "corsheaders.middleware.CorsMiddleware", # cors
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
