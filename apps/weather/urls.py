@@ -6,6 +6,8 @@ from .api.Country.CountryCreate.views import CountryCreateAPIView
 from .api.Country.CountryDelete.views import CountryDeleteAPIView
 from .api.Country.CountryUpdate.views import CountryUpdateAPIView
 
+from .api.Region.RegionList.views import RegionListAPIView
+
 
 urlpatterns = [
     path(
@@ -32,5 +34,10 @@ urlpatterns = [
         'country-update/<int:pk>/',
         CountryUpdateAPIView.as_view(),
         name='country-update',
+    ),
+    path(
+        'region-list/',
+        RegionListAPIView.as_view(),
+        name='region-list',
     ),
 ]
