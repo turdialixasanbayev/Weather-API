@@ -10,7 +10,10 @@ from .api.Region.RegionList.views import RegionListAPIView
 from .api.Region.RegionDelete.views import as_view
 from .api.Region.RegionRetrieve.views import RegionDetailAPIView
 from .api.Region.RegionUpdate.views import RegionUpdateAPIView
-from apps.weather.api.Region.RegionCreate.views import RegionCreateAPIView
+from .api.Region.RegionCreate.views import RegionCreateAPIView
+
+from .api.District.DistrictCreate.views import DistrictCreateAPIView
+from .api.District.DistrictUpdate.views import DistrictUpdateAPIView
 
 
 urlpatterns = [
@@ -63,5 +66,15 @@ urlpatterns = [
         'region-create/',
         RegionCreateAPIView.as_view(),
         name='region-create',
+    ),
+    path(
+        'district-create/',
+        DistrictCreateAPIView.as_view(),
+        name='district-create',
+    ),
+    path(
+        'district-update/<int:pk>/',
+        DistrictUpdateAPIView.as_view(),
+        name='district-update',
     ),
 ]
