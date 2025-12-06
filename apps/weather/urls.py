@@ -14,6 +14,9 @@ from .api.Region.RegionCreate.views import RegionCreateAPIView
 
 from .api.District.DistrictCreate.views import DistrictCreateAPIView
 from .api.District.DistrictUpdate.views import DistrictUpdateAPIView
+from .api.District.DistrictList.views import DistrictListAPIView
+from .api.District.DistrictRetrieve.views import DistrictRetrieveAPIView
+from .api.District.DistrictDestroy.views import DistrictDestroyAPIView
 
 
 urlpatterns = [
@@ -76,5 +79,20 @@ urlpatterns = [
         'district-update/<int:pk>/',
         DistrictUpdateAPIView.as_view(),
         name='district-update',
+    ),
+    path(
+        'district-list/',
+        DistrictListAPIView.as_view(),
+        name='district-list',
+    ),
+    path(
+        'district-retrieve/<int:pk>/',
+        DistrictRetrieveAPIView.as_view(),
+        name='district-retrieve',
+    ),
+    path(
+        'district-destroy/<int:pk>/',
+        DistrictDestroyAPIView.as_view(),
+        name='district-destroy',
     ),
 ]
