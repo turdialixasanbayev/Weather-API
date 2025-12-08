@@ -18,6 +18,12 @@ from .api.District.DistrictList.views import DistrictListAPIView
 from .api.District.DistrictRetrieve.views import DistrictRetrieveAPIView
 from .api.District.DistrictDestroy.views import DistrictDestroyAPIView
 
+from .api.Village.VillageList.views import VillageListAPIView
+from .api.Village.VillageRetrieve.views import VillageDetailAPIView
+from .api.Village.VillageDestroy.views import VillageDeleteAPIView
+from .api.Village.VillageUpdate.views import VillageUpdateAPIView
+from .api.Village.VillageCreate.views import VillageCreateAPIView
+
 
 urlpatterns = [
     path(
@@ -94,5 +100,30 @@ urlpatterns = [
         'district-destroy/<int:pk>/',
         DistrictDestroyAPIView.as_view(),
         name='district-destroy',
+    ),
+    path(
+        'village-list/',
+        VillageListAPIView.as_view(),
+        name='village-list',
+    ),
+    path(
+        'village-detail/<int:pk>/',
+        VillageDetailAPIView.as_view(),
+        name='village-detail',
+    ),
+    path(
+        'village-delete/<int:pk>/',
+        VillageDeleteAPIView.as_view(),
+        name='village-delete',
+    ),
+    path(
+        'village-update/<int:pk>/',
+        VillageUpdateAPIView.as_view(),
+        name='village-update',
+    ),
+    path(
+        'village-create/',
+        VillageCreateAPIView.as_view(),
+        name='village-create',
     ),
 ]
