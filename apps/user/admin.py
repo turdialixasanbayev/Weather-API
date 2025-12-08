@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser
+from .models import CustomUser, MonitoringLog
 
 
 admin.site.site_header = "Weather Admin Paneli"
@@ -10,3 +10,4 @@ admin.site.empty_value_display = "Mavjud emas!"
 
 
 admin.site.register(CustomUser)
+admin.site.register(MonitoringLog)
