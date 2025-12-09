@@ -24,6 +24,13 @@ from .api.Village.VillageDestroy.views import VillageDeleteAPIView
 from .api.Village.VillageUpdate.views import VillageUpdateAPIView
 from .api.Village.VillageCreate.views import VillageCreateAPIView
 
+from django.urls import include
+from rest_framework.routers import DefaultRouter
+from .api.Weather.WeatherViewSet.views import WeatherViewSet
+
+router = DefaultRouter() # Create a router instance
+router.register(r'weathers', WeatherViewSet, basename='weather') # Register the WeatherViewSet with the router
+
 
 urlpatterns = [
     path(
@@ -126,4 +133,6 @@ urlpatterns = [
         VillageCreateAPIView.as_view(),
         name='village-create',
     ),
+    ###
+    path('router/urls/', include(router.urls)),  # Include the router URLs
 ]

@@ -106,11 +106,11 @@ class Weather(models.Model):
 
     def __str__(self) -> str:
         return f"{self.village.name} - {self.temperature}°C"
-    
+
     @property
     def get_id(self) -> int:
         return self.id or None
-    
+
     @property
     def get_pk(self) -> int:
         return self.pk or None
