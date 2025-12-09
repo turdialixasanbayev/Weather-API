@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.user.models import MonitoringLog
+from .models import MonitoringLog
 
 
 class MonitoringSerializer(serializers.ModelSerializer):

@@ -3,7 +3,7 @@ import time
 from django.db import connection
 from django.utils.deprecation import MiddlewareMixin
 
-from apps.user.models import MonitoringLog
+from .models import MonitoringLog
 
 
 class FullMonitoringMiddleware(MiddlewareMixin):

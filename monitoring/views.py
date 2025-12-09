@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from rest_framework import status
 
-from apps.user.models import MonitoringLog
+from .models import MonitoringLog
 
 from .serializers import MonitoringSerializer
 

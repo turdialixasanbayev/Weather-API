@@ -3,6 +3,10 @@ from pathlib import Path
 import os
 import environ
 
+from celery.schedules import crontab
+
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +41,65 @@ INSTALLED_APPS = [
 
     'apps.weather',
     'apps.user',
+    
+    'monitoring',
 ]
+
+# ============================
+# REDIS CACHE SETTINGS
+# ============================
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# ============================
+# CELERY + REDIS SETTINGS
+# ============================
+
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "Asia/Tashkent"
+
+CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 10 * 60  # 10 minut maksimal task vaqti
+# CELERY_TASK_ALWAYS_EAGER  = True  # development uchun True qilinadi # djangoni ozida qiladi taskni
+
+# Retry/acks yengilligi
+CELERY_TASK_ACKS_LATE = True
+CELERY_TASK_REJECT_ON_WORKER_LOST = True
+
+### Additional Celery Settings
+
+# CELERY_TASK_SOFT_TIME_LIMIT = 2 * 60  # 2 minut “soft” limit
+# CELERY_TASK_DEFAULT_RETRY_DELAY = 60  # 60s keyin retry
+# CELERY_TASK_MAX_RETRIES = 3
+# CELERY_RESULT_EXPIRES = 3600  # 1 soat
+# CELERYD_HIJACK_ROOT_LOGGER = False
+# CELERYD_LOG_COLOR = True
+
+
+# CELERY_BEAT_SCHEDULE Settings
+
+
+CELERY_BEAT_SCHEDULE = {
+    "clean-monitoring-logs": {
+        "task": "monitoring.tasks.clean_old_monitoring_logs",
+        "schedule": crontab(minute="*/10"),  # 10 minutes with crontab
+        # "schedule": timedelta(seconds=10),  # har 10 soniyada
+    },
+}
+
 
 # Cors
 
