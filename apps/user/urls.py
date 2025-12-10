@@ -20,6 +20,7 @@ from apps.user.api.Register.views import RegisterView
 from apps.user.api.Login.views import LoginView
 from apps.user.api.Refresh.views import CustomTokenRefreshView
 from apps.user.api.Verify.views import CustomTokenVerifyView
+from apps.user.api.Logout.views import LogoutAPIView
 
 
 urlpatterns = [
@@ -90,4 +91,5 @@ urlpatterns = [
         CustomTokenVerifyView.as_view(),
         name='token_verify',
     ),
+    path("logout/", LogoutAPIView.as_view(), name="logout"),
 ]
