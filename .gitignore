@@ -210,3 +210,9 @@ __marimo__/
 
 staticfiles/
 mediafiles/
+
+# Celery
+
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
