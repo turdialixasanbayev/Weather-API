@@ -216,5 +216,5 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),                     # Authorization header tipi
     "USER_ID_FIELD": "id",                                # Token ichida user identifikatori
     "USER_ID_CLAIM": "user_id",                           # Token da user id field
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken")  # Token class
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",)  # Token class
 }
