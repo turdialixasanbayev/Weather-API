@@ -1,11 +1,9 @@
 from celery import shared_task
-
 from .models import MonitoringLog
-
 
 @shared_task
 def clean_old_monitoring_logs():
-    MAX_LOGS = 100
+    MAX_LOGS = 20
     total = MonitoringLog.objects.count()
 
     if total > MAX_LOGS:

@@ -1,10 +1,7 @@
 import time
-
 from django.db import connection
 from django.utils.deprecation import MiddlewareMixin
-
 from .models import MonitoringLog
-
 
 class FullMonitoringMiddleware(MiddlewareMixin):
     def process_request(self, request):

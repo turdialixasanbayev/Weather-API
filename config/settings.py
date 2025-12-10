@@ -1,16 +1,12 @@
 from pathlib import Path
-
 import os
 import environ
-
 from celery.schedules import crontab
-
-from datetime import timedelta
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -20,9 +16,9 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] # dev uchun
 
-AUTH_USER_MODEL = 'user.CustomUser'
+AUTH_USER_MODEL = 'user.CustomUser' # custom user model
 
 # Application definition
 
@@ -34,15 +30,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # libs
     'drf_yasg',
     'rest_framework',
     # "corsheaders", # cors
     'query_counter', # query counter
 
+    # local apps
     'apps.weather',
     'apps.user',
     
-    'monitoring',
+    'apps.monitoring', # monitoring app
 ]
 
 # ============================
@@ -53,9 +51,7 @@ CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"}
     }
 }
 
@@ -65,41 +61,20 @@ CACHES = {
 
 CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
-
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Tashkent"
-
 CELERY_TASK_TRACK_STARTED = True
-# CELERY_TASK_TIME_LIMIT = 10 * 60  # 10 minut maksimal task vaqti
-# CELERY_TASK_ALWAYS_EAGER  = True  # development uchun True qilinadi # djangoni ozida qiladi taskni
-
-# Retry/acks yengilligi
 CELERY_TASK_ACKS_LATE = True
 CELERY_TASK_REJECT_ON_WORKER_LOST = True
-
-### Additional Celery Settings
-
-# CELERY_TASK_SOFT_TIME_LIMIT = 2 * 60  # 2 minut “soft” limit
-# CELERY_TASK_DEFAULT_RETRY_DELAY = 60  # 60s keyin retry
-# CELERY_TASK_MAX_RETRIES = 3
-# CELERY_RESULT_EXPIRES = 3600  # 1 soat
-# CELERYD_HIJACK_ROOT_LOGGER = False
-# CELERYD_LOG_COLOR = True
-
+CELERY_TASK_ALWAYS_EAGER  = True  # development uchun True qilinadi
 
 # CELERY_BEAT_SCHEDULE Settings
 
-
 CELERY_BEAT_SCHEDULE = {
     "clean-monitoring-logs": {
-        "task": "monitoring.tasks.clean_old_monitoring_logs",
-        "schedule": crontab(minute="*/10"),  # 10 minutes with crontab
-        # "schedule": timedelta(seconds=10),  # har 10 soniyada
-    },
+        "task": "apps.monitoring.tasks.clean_old_monitoring_logs",
+        "schedule": crontab(minute="*/3")  # 3 minutes
+    }
 }
-
 
 # Cors
 
@@ -121,7 +96,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'query_counter.middleware.DjangoQueryCounterMiddleware', # query counter
-    'monitoring.middleware.FullMonitoringMiddleware',  # monitoring middleware
+    'apps.monitoring.middleware.FullMonitoringMiddleware',  # monitoring middleware
 ]
 
 # Django Query Counter Settings

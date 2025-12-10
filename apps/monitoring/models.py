@@ -1,8 +1,5 @@
 from django.db import models
 
-### MonitoringLog modeli
-
-
 class MonitoringLog(models.Model):
     method = models.CharField(max_length=10)
     path = models.CharField(max_length=255)

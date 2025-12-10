@@ -42,7 +42,7 @@ urlpatterns = [
     # monitoring url
     path(
         'api/monitoring/',
-        include('monitoring.urls')
+        include('apps.monitoring.urls')
     ),
 
     path('swagger/<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
