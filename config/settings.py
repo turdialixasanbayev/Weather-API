@@ -2,6 +2,8 @@ from pathlib import Path
 import os
 import environ
 from celery.schedules import crontab
+from datetime import timedelta
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,6 +37,9 @@ INSTALLED_APPS = [
     'rest_framework',
     # "corsheaders", # cors
     'query_counter', # query counter
+    'rest_framework_simplejwt', # JWT auth
+    # token blacklist
+    'rest_framework_simplejwt.token_blacklist',
 
     # local apps
     'apps.weather',
@@ -84,6 +89,11 @@ CELERY_BEAT_SCHEDULE = {
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 2,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # session auth ham ishlashi uchun
+        'rest_framework.authentication.SessionAuthentication',
+    )
 }
 
 MIDDLEWARE = [
@@ -193,3 +203,18 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+### JWT Settings
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),        # Access token amal qilish vaqti
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),          # Refresh token amal qilish vaqti
+    "ROTATE_REFRESH_TOKENS": False,                       # Refresh token rotation yo‘q
+    "BLACKLIST_AFTER_ROTATION": False,                    # Token blacklist ishlatilmaydi
+    "ALGORITHM": "HS256",                                 # Token algoritmi
+    "SIGNING_KEY": settings.SECRET_KEY,                   # Django SECRET_KEY bilan imzolash
+    "AUTH_HEADER_TYPES": ("Bearer",),                     # Authorization header tipi
+    "USER_ID_FIELD": "id",                                # Token ichida user identifikatori
+    "USER_ID_CLAIM": "user_id",                           # Token da user id field
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken")  # Token class
+}

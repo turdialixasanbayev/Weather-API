@@ -14,6 +14,13 @@ from apps.user.views.get_region_and_get_district import (
 
 from ..user.views.search_village import SearchVillageAPIView
 
+### Auth urls
+
+from apps.user.api.Register.views import RegisterView
+from apps.user.api.Login.views import LoginView
+from apps.user.api.Refresh.views import CustomTokenRefreshView
+from apps.user.api.Verify.views import CustomTokenVerifyView
+
 
 urlpatterns = [
     path(
@@ -60,5 +67,27 @@ urlpatterns = [
         'search-village/',
         SearchVillageAPIView.as_view(),
         name='search-village',
+    ),
+
+    ### Auth urls
+    path(
+        'register/',
+        RegisterView.as_view(),
+        name='register',
+    ),
+    path(
+        'login/',
+        LoginView.as_view(),
+        name='login',
+    ),
+    path(
+        'token/refresh/',
+        CustomTokenRefreshView.as_view(),
+        name='token_refresh',
+    ),
+    path(
+        'token/verify/',
+        CustomTokenVerifyView.as_view(),
+        name='token_verify',
     ),
 ]
