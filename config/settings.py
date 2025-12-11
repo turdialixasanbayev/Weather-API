@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt', # JWT auth
     # token blacklist
     'rest_framework_simplejwt.token_blacklist',
+    "django_extensions",
 
     # local apps
     'apps.weather',

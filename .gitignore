@@ -216,3 +216,8 @@ mediafiles/
 celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir
+
+# Cert
+
+localhost+1-key.pem
+localhost+1.pem
