@@ -213,6 +213,9 @@ mediafiles/
 static/
 .env.example
 run.bat
+run_https.bat
+scripts/
+locale/
 
 # Celery
 
