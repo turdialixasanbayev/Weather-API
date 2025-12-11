@@ -210,6 +210,9 @@ __marimo__/
 
 staticfiles/
 mediafiles/
+static/
+.env.example
+run.bat
 
 # Celery
 
