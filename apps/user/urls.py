@@ -22,6 +22,12 @@ from apps.user.api.Refresh.views import CustomTokenRefreshView
 from apps.user.api.Verify.views import CustomTokenVerifyView
 from apps.user.api.Logout.views import LogoutAPIView
 
+# Verify email urls
+
+from .api.EmailVerify.views import (
+    SendVerifyCodeView, VerifyCodeView
+)
+
 
 urlpatterns = [
     path(
@@ -92,4 +98,16 @@ urlpatterns = [
         name='token_verify',
     ),
     path("logout/", LogoutAPIView.as_view(), name="logout"),
+
+    # Verify email urls
+    path(
+        'send-verify-code/',
+        SendVerifyCodeView.as_view(),
+        name='send-verify-code',
+    ),
+    path(
+        'verify-code/',
+        VerifyCodeView.as_view(),
+        name='verify-code',
+    ),
 ]

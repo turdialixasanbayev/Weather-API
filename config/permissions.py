@@ -31,3 +31,19 @@ class IsAuthenticated(BasePermission):
             request.user.is_authenticated and 
             request.user.is_active
         )
+
+
+class IsAuthenticatedAndIsUnVerified(BasePermission):
+    """
+    Faqat autentifikatsiyadan o'tgan, aktiv va tasdiqlanmagan foydalanuvchilarga ruxsat beradi.
+    """
+
+    message = "Siz bu APIni quyidagi sabablardan biriga ko'ra ishlata olmaysiz: tizimga kirmadingiz, hisobingiz faol emas yoki tasdiqlangan."
+
+    def has_permission(self, request, view):
+        return bool(
+            request.user and
+            request.user.is_authenticated and 
+            request.user.is_active and
+            not request.user.is_verified
+        )

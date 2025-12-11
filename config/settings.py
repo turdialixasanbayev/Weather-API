@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     # local apps
     'apps.weather',
     'apps.user',
-    
+
     'apps.monitoring', # monitoring app
 ]
 
@@ -93,6 +93,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # session auth ham ishlashi uchun
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     )
 }
 

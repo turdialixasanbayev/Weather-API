@@ -26,6 +26,8 @@ class CustomUser(AbstractUser):
         blank=True,
     )
 
+    is_verified = models.BooleanField(default=False)
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
@@ -117,7 +119,7 @@ class CustomUser(AbstractUser):
 
     @property
     def get_profile(self):
-        data = {"email": self.email}
+        data = {"email": self.email, "is_verified": self.is_verified}
 
         return data
 
@@ -128,3 +130,10 @@ class CustomUser(AbstractUser):
     @property
     def get_pk(self) -> int:
         return self.pk or None
+
+
+class VerifyCode(models.Model):
+    code = models.CharField(max_length=6, unique=True)
+
+    def __str__(self) -> str:
+        return f"VerifyCode: {self.code}"
