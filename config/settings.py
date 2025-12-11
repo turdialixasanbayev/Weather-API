@@ -70,14 +70,14 @@ CELERY_TIMEZONE = "Asia/Tashkent"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ACKS_LATE = True
 CELERY_TASK_REJECT_ON_WORKER_LOST = True
-CELERY_TASK_ALWAYS_EAGER  = True  # development uchun True qilinadi
+CELERY_TASK_ALWAYS_EAGER  = False  # development uchun True qilinadi
 
 # CELERY_BEAT_SCHEDULE Settings
 
 CELERY_BEAT_SCHEDULE = {
     "clean-monitoring-logs": {
         "task": "apps.monitoring.tasks.clean_old_monitoring_logs",
-        "schedule": crontab(minute="*/3")  # 3 minutes
+        "schedule": crontab(minute="*/10")  # 10 minutes
     }
 }
 
@@ -218,3 +218,13 @@ SIMPLE_JWT = {
     "USER_ID_CLAIM": "user_id",                           # Token da user id field
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",)  # Token class
 }
+
+# SMTP Settings
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "xasanbayevturdiali@gmail.com"
+EMAIL_HOST_PASSWORD = "pxsu ncwd pfkh nrgp"
