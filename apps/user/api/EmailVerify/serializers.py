@@ -42,7 +42,7 @@ class VerifyCodeSerializer(serializers.Serializer):
         try:
             verify_obj = VerifyCode.objects.get(code=value)
         except VerifyCode.DoesNotExist:
-            raise serializers.ValidationError("Kod topilmadi.")
+            raise serializers.ValidationError("Kod noto'g'ri.")
 
         self.context['verify_obj'] = verify_obj
         return value
